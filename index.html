@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YOU HAVE BEEN HACKED</title>
+    <style>
+        body {
+            background-color: black;
+            color: red;
+            font-family: 'Courier New', monospace;
+            font-size: 2em;
+            text-align: center;
+            overflow: hidden;
+        }
+        #text {
+            white-space: pre-wrap;
+            margin-bottom: 20px;
+        }
+        #stopButton {
+            display: none; /* Hidden until alerts finish */
+            background-color: red;
+            color: white;
+            font-size: 1.5em;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="text"></div>
+
+    <button id="stopButton">Stop the madness</button>
+
+    <audio id="rickroll-audio" loop>
+        <source src="https://www.myinstants.com/media/sounds/rick-roll.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Force fullscreen
+        document.documentElement.requestFullscreen().catch(() => {});
+
+        let audio = document.getElementById("rickroll-audio");
+        let stopButton = document.getElementById("stopButton");
+
+        // Self-typing effect
+        let message = "YOU HAVE BEEN HACKED\n\n" +
+                      "I KNOW EVERYTHING ABOUT YOU...\n" +
+                      "Your name is Amy...\n" +
+                      "You live in Paris...\n" +
+                      "You made out with your cousin at age 5...\n" +
+                      "And guess what? THE WORLD WILL KNOW.";
+
+        let index = 0;
+        function typeEffect() {
+            if (index < message.length) {
+                document.getElementById("text").innerText += message[index];
+                index++;
+                setTimeout(typeEffect, 100);
+            } else {
+                setTimeout(spamAlerts, 1000);
+            }
+        }
+        typeEffect();
+
+        // Spam alert boxes
+        function spamAlerts() {
+            let alerts = [
+                "WARNING: DEVICE IS COMPROMISED. Please visit support.apple.com IMMEDIATELY.",
+                "WARNING: SYSTEM SECURITY BREACHED.",
+                "WARNING: DATA LEAK, PLEASE CHANGE ALL YOUR PASSWORDS.",
+                "WARNING: HARDWARE FAILURE.",
+                "WARNING: ...",
+                "WARNING: ...",
+                "WARNING: ...",
+                "WARNING: Amy...",
+                "WARNING: never...gonna..."
+            ];
+
+            let i = 0;
+            function nextAlert() {
+                if (i < alerts.length) {
+                    alert(alerts[i]);
+                    i++;
+                    setTimeout(nextAlert, 500);
+                } else {
+                    stopButton.style.display = "block"; // Show "Stop the Madness" button
+                }
+            }
+            nextAlert();
+        }
+
+        // "Stop the Madness" button (But actually makes it worse)
+        stopButton.addEventListener("click", function() {
+            stopButton.style.display = "none"; // Hide button
+            audio.volume = 1.0; // Max volume
+            audio.play(); // Start Rickroll
+            setTimeout(() => {
+                alert("NEVER GONNA GIVE YOU UP, NEVER GONNA LET YOU DOWN!");
+            }, 1000);
+        });
+
+        // Escape key (for mercy)
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "Escape") {
+                alert("Fine, you win...");
+                window.location.href = "https://google.com";
+            }
+        });
+    </script>
+
+</body>
+</html>
